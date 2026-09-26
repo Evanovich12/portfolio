@@ -40,9 +40,14 @@ export function Hero() {
             Bonjour 👋 je m’appelle
           </p>
 
-          <h1 className="text-gradient text-5xl leading-[1.05] font-semibold tracking-tight md:text-7xl">
+          <motion.h1
+            initial={{ clipPath: 'inset(0 100% 0 0)' }}
+            animate={{ clipPath: 'inset(0 0% 0 0)' }}
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.65, 0, 0.08, 1] }}
+            className="text-gradient text-5xl leading-[1.05] font-semibold tracking-tight md:text-7xl"
+          >
             {profile.name}
-          </h1>
+          </motion.h1>
 
           <div className="mt-6 max-w-xl">
             <TextGenerateEffect

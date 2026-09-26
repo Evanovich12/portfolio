@@ -1,11 +1,19 @@
 import { ArrowUpRight } from 'lucide-react'
-import { motion } from 'motion/react'
+import { motion, useScroll, useTransform } from 'motion/react'
+import { useRef } from 'react'
 
 export function ProjectCard({ project, index, hovered, setHovered }) {
   const isDimmed = hovered !== null && hovered !== index
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+  const imageY = useTransform(scrollYProgress, [0, 1], ['-6%', '6%'])
 
   return (
     <motion.div
+      ref={ref}
       onMouseEnter={() => setHovered(index)}
       onMouseLeave={() => setHovered(null)}
       animate={{
@@ -16,11 +24,12 @@ export function ProjectCard({ project, index, hovered, setHovered }) {
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       className="group relative aspect-4/3 overflow-hidden rounded-2xl border border-white/10 bg-card"
     >
-      <img
+      <motion.img
+        style={{ y: imageY }}
         src={project.image}
         alt={project.title}
         loading="lazy"
-        className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+        className="absolute inset-0 -top-[6%] size-full h-[112%] object-cover transition-transform duration-700 ease-out group-hover:scale-110"
       />
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent transition-opacity duration-500 group-hover:opacity-95" />
